@@ -24,6 +24,7 @@
 		"illuminate/validation": "^8.42",
 		"laminas/laminas-text": "^2.8",
 		"nunomaduro/laravel-console-menu": "^3.2",
+		"padraic/phar-updater": "^1.0.6",
 		"spatie/laravel-ray": "^1.18"
 	},
 	"require-dev": {
