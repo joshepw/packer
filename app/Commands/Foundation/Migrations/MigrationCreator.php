@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Commands\Foundation\Migrations;
+
+use Illuminate\Database\Migrations\MigrationCreator as RealMigrationCreator;
+use App\Traits\InteractsWithFoundationCommands;
+
+class MigrationCreator extends RealMigrationCreator
+{
+	use InteractsWithFoundationCommands;
+
+	/**
+	 * Get the full path to the migration.
+	 *
+	 * @param  string  $name
+	 * @param  string  $path
+	 * @return string
+	 */
+	protected function getPath($name, $path)
+	{
+		$path = $this->getPackagePath($this->isLaravelPackage() ? '/src/Database/Migrations' : '/database/migrations');
+
+		if (!$this->files->isDirectory($path)) {
+			$this->files->makeDirectory($path, 0777, true);
+		}
+
+		return $path . '/' . $this->getDatePrefix() . '_' . $name . '.php';
+	}
+}

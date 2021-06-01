@@ -1,0 +1,56 @@
+image: joshepw/php80-xdebug
+
+clone:
+  depth: full
+
+definitions:
+  caches:
+    sonar: ~/.sonar/cache
+  steps:
+    - step: &test-in-memory
+        name: Test package with SQLite
+        caches:
+          - composer
+        script:
+          - composer install
+          - composer test:coverage
+    - step: &test-in-database
+        name: Test package with MySQL
+        caches:
+          - composer
+        script:
+          - export DB_CONNECTION=testbench
+          - refresh-db
+          - composer install
+          - composer test:coverage
+    - step: &build-test-sonarcloud
+        name: Build, test and analyze on SonarCloud
+        caches:
+          - composer
+        script:
+          - export DB_CONNECTION=testbench
+          - refresh-db
+          - composer install
+          - composer test:coverage
+          - sonar-scanner
+    - step: &build-test-deploy
+        name: Build, Test and Publish
+        caches:
+          - composer
+        script:
+          - export DB_CONNECTION=testbench
+          - refresh-db
+          - composer install
+          - composer test:coverage
+          - sonar-scanner
+          - devliver
+
+pipelines:
+  pull-requests:
+    '**':
+      - step: *build-test-sonarcloud
+  tags:
+    test-*:
+      - step: *test-in-database
+    v*:
+      - step: *build-test-deploy

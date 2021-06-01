@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyRootNamespaceTestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+
+class DummyClass extends TestCase
+{
+	/**
+	 * A basic test example.
+	 *
+	 * @return void
+	 */
+	public function testExample()
+	{
+		$this->assertTrue(true);
+	}
+}

@@ -1,0 +1,26 @@
+<?php
+
+namespace StudlyDummyVendor\StudlyDummyPackageName\Tests;
+
+use Pixel\Support\SupportServiceProvider;
+use StudlyDummyVendor\StudlyDummyPackageName\StudlyDummyPackageNameServiceProvider;
+use StudlyDummyVendor\StudlyDummyPackageName\Database\Seeders\DatabaseSeeder;
+use Pixel\Support\Testing\TestCase as BaseTestCase;
+
+class TestCase extends BaseTestCase
+{
+	protected function getEnvironmentSetUp($app)
+	{
+		$this->seed(DatabaseSeeder::class);
+		
+		$app->instance('path.public', __DIR__ . '/../public');
+	}
+
+	protected function getPackageProviders($app)
+	{
+		return [
+			SupportServiceProvider::class,
+			StudlyDummyPackageNameServiceProvider::class
+		];
+	}
+}

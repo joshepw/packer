@@ -1,13 +1,20 @@
 {
 	"name": "pixel/packer",
 	"description": "Laravel project/package cli-tool",
-	"version": "1.0.1",
 	"keywords": [
 		"framework",
 		"laravel",
 		"laravel zero",
 		"console",
 		"cli"
+	],
+	"type": "project",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Ivan Suazo",
+			"email": "joshepw@gmail.com"
+		}
 	],
 	"require": {
 		"php": "^7.3|^8.0",
@@ -16,19 +23,33 @@
 		"illuminate/http": "^8.0",
 		"illuminate/validation": "^8.42",
 		"laminas/laminas-text": "^2.8",
-		"laravel-zero/framework": "^8.7",
 		"nunomaduro/laravel-console-menu": "^3.2",
 		"spatie/laravel-ray": "^1.18"
 	},
-	"type": "binary",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Ivan Suazo",
-			"email": "joshepw@gmail.com"
+	"require-dev": {
+		"laravel-zero/framework": "^8.7",
+		"fakerphp/faker": "^1.9.1",
+		"mockery/mockery": "^1.4.2",
+		"pestphp/pest": "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/"
 		}
-	],
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	},
+	"config": {
+		"preferred-install": "dist",
+		"sort-packages": true,
+		"optimize-autoloader": true
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"bin": [
-		"packer"
+		"builds/packer"
 	]
 }

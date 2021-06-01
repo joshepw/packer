@@ -1,0 +1,203 @@
+<?php
+
+namespace App\Commands\Foundation;
+
+use App\Traits\ClassInputName;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
+use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputOption;
+use App\Traits\InteractsWithFoundationCommands;
+
+class ControllerMakeCommand extends GeneratorCommand
+{
+	use InteractsWithFoundationCommands;
+	use ClassInputName;
+
+	/**
+	 * The console command name.
+	 *
+	 * @var string
+	 */
+	protected $name = 'make:controller';
+
+	/**
+	 * The console command description.
+	 *
+	 * @var string
+	 */
+	protected $description = 'Create a new controller class';
+
+	/**
+	 * The type of class being generated.
+	 *
+	 * @var string
+	 */
+	protected $type = 'Controller';
+
+	/**
+	 * Get the stub file for the generator.
+	 *
+	 * @return string
+	 */
+	protected function getStub()
+	{
+		$stub = null;
+
+		if ($this->option('parent')) {
+			$stub = '/stubs/controller.nested.stub';
+		} elseif ($this->option('model')) {
+			$stub = '/stubs/controller.model.stub';
+		} elseif ($this->option('invokable')) {
+			$stub = '/stubs/controller.invokable.stub';
+		} elseif ($this->option('resource')) {
+			$stub = '/stubs/controller.stub';
+		}
+
+		if ($this->option('api') && is_null($stub)) {
+			$stub = '/stubs/controller.api.stub';
+		} elseif ($this->option('api') && !is_null($stub) && !$this->option('invokable')) {
+			$stub = str_replace('.stub', '.api.stub', $stub);
+		}
+
+		$stub = $stub ?? '/stubs/controller.plain.stub';
+
+		return __DIR__ . $stub;
+	}
+
+	/**
+	 * Get the default namespace for the class.
+	 *
+	 * @param  string  $rootNamespace
+	 * @return string
+	 */
+	protected function getDefaultNamespace($rootNamespace)
+	{
+		return $this->rootNamespace() . 'Http\Controllers';
+	}
+
+	/**
+	 * Build the class with the given name.
+	 *
+	 * Remove the base controller import if we are already in base namespace.
+	 *
+	 * @param  string  $name
+	 * @return string
+	 */
+	protected function buildClass($name)
+	{
+		$controllerNamespace = $this->getNamespace($name);
+
+		$replace = [];
+
+		if ($this->option('parent')) {
+			$replace = $this->buildParentReplacements();
+		}
+
+		if ($this->option('model')) {
+			$replace = $this->buildModelReplacements($replace);
+		}
+
+		$replace["use {$controllerNamespace}\Controller;\n"] = '';
+
+		return str_replace(
+			array_keys($replace),
+			array_values($replace),
+			parent::buildClass($name)
+		);
+	}
+
+	/**
+	 * Build the replacements for a parent controller.
+	 *
+	 * @return array
+	 */
+	protected function buildParentReplacements()
+	{
+		$class = Str::studly($this->option('parent'));
+		$parentModelClass = $this->parseModel($class);
+
+		return [
+			'ParentDummyFullModelClass' => $parentModelClass,
+			'ParentDummyModelClass'     => class_basename($parentModelClass),
+			'ParentDummyModelVariable'  => lcfirst(class_basename($parentModelClass)),
+		];
+	}
+
+	/**
+	 * Build the model replacement values.
+	 *
+	 * @param  array  $replace
+	 * @return array
+	 */
+	protected function buildModelReplacements(array $replace)
+	{
+		$class = Str::studly($this->option('model'));
+		$modelClass = $this->parseModel($class);
+
+		return array_merge($replace, [
+			'DummyFullModelClass' => $modelClass,
+			'DummyModelClass'     => class_basename($modelClass),
+			'DummyModelVariable'  => lcfirst(class_basename($modelClass)),
+		]);
+	}
+
+	/**
+	 * Get the fully-qualified model class name.
+	 *
+	 * @param  string  $model
+	 * @return string
+	 *
+	 * @throws \InvalidArgumentException
+	 */
+	protected function parseModel($model)
+	{
+		if (preg_match('([^A-Za-z0-9_/\\\\])', $model)) {
+			throw new InvalidArgumentException('Model name contains invalid characters.');
+		}
+
+		$model = trim(str_replace('/', '\\', $model), '\\');
+		$rootNamespace = $this->isLaravelProject() ? $this->laravel->getNamespace() : $this->namespaceFromComposer().'Models\\';
+
+		if (!Str::startsWith($model, $rootNamespace)) {
+			$model = $rootNamespace . $model;
+		}
+
+		return $model;
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
+			['resource', 'r', InputOption::VALUE_NONE, 'Generate a resource controller class.'],
+			['invokable', 'i', InputOption::VALUE_NONE, 'Generate a single method, invokable controller class.'],
+			['parent', 'p', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
+			['api', null, InputOption::VALUE_NONE, 'Exclude the create and edit methods from the controller.'],
+		];
+	}
+
+	/**
+	 * Options to show on make command
+	 *
+	 * @return array
+	 */
+	public function getQuestions(): array
+	{
+		return [
+			'type' => [
+				'default' => 'Generate a default controller class',
+				'--resource' => 'Generate a resource controller class.',
+				'--invokable' => 'Generate a single method, invokable controller class.',
+				'--api' => 'Generate an API controller class.',
+			],
+			'--model=' => 'Generate a resource controller for the given model',
+			'--parent=' => 'Generate a nested resource controller for the given class',
+		];
+	}
+}

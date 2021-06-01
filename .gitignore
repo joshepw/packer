@@ -1,0 +1,9 @@
+/fork
+/vendor
+/.idea
+/.vscode
+/.vagrant
+.phpunit.result.cache
+/database/database.sqlite
+/packages
+composer.lock
