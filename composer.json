@@ -1,0 +1,22 @@
+{
+	"name": "pixel/packer",
+	"description": "Laravel project/package cli-tool",
+	"keywords": [
+		"framework",
+		"laravel",
+		"laravel zero",
+		"console",
+		"cli"
+	],
+	"type": "binary",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Ivan Suazo",
+			"email": "joshepw@gmail.com"
+		}
+	],
+	"bin": [
+		"packer"
+	]
+}
