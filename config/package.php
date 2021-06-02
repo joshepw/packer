@@ -2,6 +2,6 @@
 
 return [
 	'vendor' => 'Pixel',
-	'author' => null,
-	'email' => null,
+	'author' => 'Ivan Suazo',
+	'email' => 'ivan@pixel.hn',
 ];
