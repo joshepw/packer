@@ -1,8 +1,8 @@
 {
 	"name": "KebabDummyVendor/KebabDummyPackageName",
-	"description": "Your package description here",
+	"description": "PackageDescriptionDummy",
 	"type": "laravel-package",
-	"version": "0.0.1",
+	"version": "PackageVersionDummy",
 	"keywords": [DummyKeywords],
 	"license": "MIT",
 	"authors": [
@@ -12,7 +12,7 @@
 		}
 	],
 	"minimum-stability": "dev",
-	"prefer-stable":true,
+	"prefer-stable": true,
 	"require": {
 		"php": "^7.3|^8.0",
 		"pixel/support": "^1.2"
@@ -35,7 +35,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"StudlyDummyVendor\\StudlyDummyPackageName\\Tests\\":"tests/"
+			"StudlyDummyVendor\\StudlyDummyPackageName\\Tests\\": "tests/"
 		}
 	},
 	"config": {
@@ -43,6 +43,8 @@
 		"sort-packages": true
 	},
 	"scripts": {
+		"post-install-cmd": "vendor/bin/cghooks add -f -l",
+		"post-update-cmd": "vendor/bin/cghooks update",
 		"test": "vendor/bin/phpunit",
 		"test:coverage": "vendor/bin/phpunit --coverage-clover .phpunit.coverage.xml --log-junit .phpunit.report.xml",
 		"test:report": "vendor/bin/phpunit --coverage-html reports/",
@@ -50,13 +52,13 @@
 		"hooks:add": "vendor/bin/cghooks add -f -l",
 		"hooks:remove": "vendor/bin/cghooks remove -f",
 		"errors": "vendor/bin/phpcs",
-		"errors:fix": "vendor/bin/phpcbf; if [ $? -eq 1 ]; then exit 0; fi"
+		"errors:fix": "vendor/bin/phpcbf"
 	},
 	"extra": {
 		"hooks": {
 			"pre-commit": [
 				"echo committing as $(git config user.name)",
-				"vendor/bin/phpcbf; if [ $? -eq 1 ]; then exit 0; fi"
+				"vendor/bin/phpcbf"
 			],
 			"pre-push": [
 				"vendor/bin/phpcs"

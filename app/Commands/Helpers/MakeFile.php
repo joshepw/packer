@@ -88,35 +88,18 @@ abstract class MakeFile extends Command
 	protected function getReplaceContent()
 	{
 		$content = $this->getContent();
+		$replace = $this->replaceContent();
 
 		$content = str_replace(
-			$this->stringsToReplace(),
-			$this->replaceContent(),
+			array_keys($replace),
+			array_values($replace),
 			$content
 		);
 
 		return str_replace('App\;', 'App;', $content);
 	}
 
-	protected function stringsToReplace()
-	{
-		return [
-			'LowerCaseDummyVendor',
-			'LowerCaseDummyPackageName',
-			'StudlyDummyVendor',
-			'StudlyDummyPackageName',
-			'KebabDummyVendor',
-			'KebabDummyPackageName',
-			'DummyAuthorName',
-			'DummyAuthorEmail',
-			'DummyFileName',
-			'LowerDummyName',
-			'StudlyDummyName',
-			'DummyKeywords',
-		];
-	}
-
-	protected function replaceContent()
+	protected function replaceContent(): array
 	{
 		$vendor      = $this->getPackageVendor();
 		$packageName = $this->getPackageName() ?? cache()->get('package_name');
@@ -139,18 +122,19 @@ abstract class MakeFile extends Command
 		}
 
 		return [
-			Str::snake($vendor),
-			Str::snake($packageName),
-			Str::studly($vendor),
-			Str::studly($packageName),
-			Str::kebab($vendor),
-			Str::kebab($packageName),
-			cache()->get('author_name') ?? 'Ivan Suazo',
-			cache()->get('author_email') ?? 'ivan@pixel.hn',
-			$this->getFilename() ?? false,
-			$name,
-			$name_studly,
-			$composerKeywords,
+			'LowerCaseDummyVendor' => Str::snake($vendor),
+			'LowerCaseDummyPackageName' => Str::snake($packageName),
+			'StudlyDummyVendor' => Str::studly($vendor),
+			'StudlyDummyPackageName' => Str::studly($packageName),
+			'KebabDummyVendor' => Str::kebab($vendor),
+			'KebabDummyPackageName' => Str::kebab($packageName),
+			'DummyAuthorName' => cache()->get('author_name') ?? 'Ivan Suazo',
+			'DummyAuthorEmail' => cache()->get('author_email') ?? 'ivan@pixel.hn',
+			'DummyFileName' => $this->getFilename() ?? false,
+			'LowerDummyName' => $name,
+			'StudlyDummyName' => $name_studly,
+			'DummyKeywords' => $composerKeywords,
+			'App\\\\' => 'App\\',
 		];
 	}
 

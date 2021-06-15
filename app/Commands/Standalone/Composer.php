@@ -36,4 +36,16 @@ class Composer extends MakeFile
 	{
 		return $this->getPackagePath();
 	}
+
+	protected function replaceContent(): array
+	{
+		$extend = parent::replaceContent();
+
+		$composer = $this->getComposer();
+
+		return array_merge($extend, [
+			'PackageDescriptionDummy' => $composer->description ?? 'Your package description here',
+			'PackageVersionDummy' => $composer->version ?? '0.0.1',
+		]);
+	}
 }

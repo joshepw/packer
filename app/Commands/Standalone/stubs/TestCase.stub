@@ -9,11 +9,9 @@ use Pixel\Support\Testing\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
 {
-	protected function getEnvironmentSetUp($app)
+	protected function setUp($app)
 	{
 		$this->seed(DatabaseSeeder::class);
-		
-		$app->instance('path.public', __DIR__ . '/../public');
 	}
 
 	protected function getPackageProviders($app)

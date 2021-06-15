@@ -34,4 +34,13 @@ class Changelog extends MakeFile
     {
         return $this->getPackagePath();
     }
+
+	protected function replaceContent(): array
+	{
+		$extend = parent::replaceContent();
+
+		return array_merge($extend, [
+			'2000-12-31' => now()->format('Y-m-d')
+		]);
+	}
 }
