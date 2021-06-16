@@ -5,8 +5,8 @@ El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Tipos de cambios: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
 
-## Unreleased
+## [Unreleased]
 
-## v1.0.0 - 2000-12-31
+## [v1.0.0] - 2000-12-31
 ### Added
 - Creación del paquete.

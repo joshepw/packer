@@ -50,11 +50,17 @@ class TestMakeCommand extends TestMake
 	{
 		$uses_header = '';
 		$uses_classes = '';
+		$logic_test = '$this->assertTrue(true);';
+
+		if ($this->option('dusk')) {
+			$uses_header .= "use Laravel\Dusk\Browser;\n";
+			$logic_test = "\$this->browse(function (Browser \$browser) {\n\t\t\t\$browser->visit('/')\n\t\t\t\t->assertSee('hello world');\n\t\t});";
+		}
 
 		if ($this->option('with-faker')) {
 			$uses_header .= "use Illuminate\Foundation\Testing\WithFaker;\n";
 			$uses_classes .= "use WithFaker;\n\t";
-		} 
+		}
 
 		if ($this->option('without-middleware')) {
 			$uses_header .= "use Illuminate\Foundation\Testing\WithoutMiddleware;\n";
@@ -64,16 +70,35 @@ class TestMakeCommand extends TestMake
 		if ($this->option('with-faker') || $this->option('without-middleware')) {
 			$uses_classes .= "\n\t";
 		}
-		
+
 		$replace = [
 			'{{ uses }}' => $uses_header,
 			'{{ usescases }}' => $uses_classes,
+			'{{ logictest }}' => $logic_test,
+			'DummyTestType' => $this->option('dusk') ? 'Browser' : '',
 		];
 
 		$stub = $this->files->get($this->getStub());
 		$stub = $this->replaceNamespace($stub, $name)->replaceClass($stub, $name);
 
 		return str_replace(array_keys($replace), array_values($replace), $stub);
+	}
+
+	/**
+	 * Get the default namespace for the class.
+	 *
+	 * @param  string  $rootNamespace
+	 * @return string
+	 */
+	protected function getDefaultNamespace($rootNamespace)
+	{
+		if ($this->option('unit')) {
+			return $rootNamespace . '\Unit';
+		} elseif ($this->option('dusk')) {
+			return $rootNamespace . '\Browser';
+		} else {
+			return $rootNamespace . '\Feature';
+		}
 	}
 
 	/**
@@ -86,7 +111,7 @@ class TestMakeCommand extends TestMake
 		$content    = $this->getComposer();
 		$loading    = 'autoload-dev';
 		$psr        = 'psr-4';
-		
+
 		return key($content->$loading->$psr);
 	}
 
@@ -106,6 +131,7 @@ class TestMakeCommand extends TestMake
 	{
 		return [
 			['unit', 'u', InputOption::VALUE_NONE, 'Create a unit test.'],
+			['dusk', 'd', InputOption::VALUE_NONE, 'Create a dusk test.'],
 			['with-faker', null, InputOption::VALUE_NONE, 'Add Facker functionality.'],
 			['without-middleware', null, InputOption::VALUE_NONE, 'Remove Middleware functionality.'],
 		];
@@ -122,6 +148,7 @@ class TestMakeCommand extends TestMake
 			'type' => [
 				'default' => 'Create a feature test',
 				'--unit' => 'Create a unit test',
+				'--dusk' => 'Create a dusk test',
 			],
 			'--with-faker' => 'Add Facker functionality',
 			'--without-middleware' => 'Remove Middleware functionality',

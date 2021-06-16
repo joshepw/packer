@@ -36,6 +36,10 @@ trait InteractsWithFoundationCommands
 
 		if ($this->files->put($path, $this->sortImports($this->buildClass($name)))) {
 			$this->line("<info>✔</info> {$this->type} created successfully at <info>{$relative_path}</info>.");
+
+			if (file_exists(dirname($path) . '/.gitkeep')) {
+				unlink(dirname($path) . '/.gitkeep');
+			}
 		} else {
 			$this->error("Error to create file.");
 		}

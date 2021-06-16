@@ -5,11 +5,12 @@ namespace StudlyDummyVendor\StudlyDummyPackageName\Tests;
 use Spatie\LaravelRay\RayServiceProvider;
 
 use Pixel\Support\SupportServiceProvider;
+use Pixel\Support\Testing\WithoutBrowserUI;
 use StudlyDummyVendor\StudlyDummyPackageName\StudlyDummyPackageNameServiceProvider;
 use StudlyDummyVendor\StudlyDummyPackageName\Database\Seeders\DatabaseSeeder;
-use Pixel\Support\Testing\TestCase as BaseTestCase;
+use Pixel\Support\Testing\BrowserTestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+class BrowserTestCase extends BaseTestCase
 {
 	/**
 	 * Initial setup database seeders

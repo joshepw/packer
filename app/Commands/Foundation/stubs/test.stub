@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use DummyRootNamespaceTestCase;
+use DummyRootNamespaceDummyTestTypeTestCase;
 {{ uses }}
-class DummyClass extends TestCase
+class DummyClass extends DummyTestTypeTestCase
 {
 	{{ usescases }}/**
 	 * A basic test example.
@@ -13,6 +13,6 @@ class DummyClass extends TestCase
 	 */
 	public function testExample()
 	{
-		$this->assertTrue(true);
+		{{ logictest }}
 	}
 }

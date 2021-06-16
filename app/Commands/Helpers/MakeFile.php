@@ -52,6 +52,10 @@ abstract class MakeFile extends Command
 
 		if ($this->filesystem->put($file_path, $this->getReplaceContent())) {
 			$this->line("<info>✔</info> The file <info>{$relative_path}</info> was created.");
+
+			if (file_exists($this->getPath() . '/.gitkeep') && $this->getFilename() !== '.gitkeep') {
+				unlink($this->getPath() . '/.gitkeep');
+			}
 		} else {
 			$this->error("Error to create file.");
 		}

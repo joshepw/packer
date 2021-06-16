@@ -190,7 +190,8 @@ class Create extends Command
 		$this->createFilesTask('unit', function() {
 			$this->runCommandTask('create:phpunit', ['--quiet' => true]);
 			$this->runCommandTask('create:test-case', ['--quiet' => true]);
-			$this->runCommandTask('make:test', ['name' => $this->package_name, '--quiet' => true]);
+			$this->runCommandTask('create:test-case', ['--browser' => true, '--quiet' => true]);
+			$this->runCommandTask('make:test', ['name' => $this->package_name, '--unit' => true, '--quiet' => true]);
 		});
 
 		$this->createFilesTask('docs', function() {
