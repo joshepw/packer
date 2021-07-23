@@ -7,6 +7,7 @@ composer.lock
 cghooks.lock
 phpunit.report.xml
 phpunit.coverage.xml
+package-lock.json
 .DS_Store
 .php_cs.cache
 .scannerwork
