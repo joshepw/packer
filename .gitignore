@@ -7,3 +7,4 @@
 /database/database.sqlite
 /packages
 composer.lock
+.DS_Store

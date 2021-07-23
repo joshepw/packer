@@ -13,6 +13,16 @@ use Pixel\Support\Testing\BrowserTestCase as BaseTestCase;
 class BrowserTestCase extends BaseTestCase
 {
 	/**
+	 * Return the public path of package assets, (!) please run `npm run production` first
+	 *
+	 * @return void
+	 */
+	protected function getPublicAssetsPackagePath()
+	{
+		return realpath(__DIR__ . '/../public');
+	}
+	
+	/**
 	 * Initial setup database seeders
 	 *
 	 * @return void

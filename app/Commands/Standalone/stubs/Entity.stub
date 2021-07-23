@@ -4,7 +4,7 @@ namespace StudlyDummyVendor\StudlyDummyPackageName\Mappings;
 
 use Pixel\Support\Traits\Arrayable;
 
-class StudlyDummyNameFacade
+class StudlyDummyNameEntity
 {
 	use Arrayable;
 }
