@@ -15,7 +15,7 @@
 		instead.
 		Note that specifying any file or directory path
 		on the command line will ignore all file tags.
-	-->	
+	-->
 	<file>src</file>
 	<file>resources</file>
 	<file>config</file>
@@ -48,16 +48,16 @@
 		The following tags are equivalent to the command line arguments:
 		-p
 	-->
-	<arg name="report" value="summary"/>
-	<arg name="colors"/>
-	<arg value="p"/>
-	<arg name="tab-width" value="4"/>
+	<arg name="report" value="summary" />
+	<arg name="colors" />
+	<arg value="p" />
+	<arg name="tab-width" value="4" />
 
 	<!--
 		You can hard-code custom php.ini settings into your custom standard.
 		The following tag sets the memory limit to 64M.
 	-->
-	<ini name="memory_limit" value="256M"/>
+	<ini name="memory_limit" value="256M" />
 
 	<!--
 		Include all sniffs in the PEAR standard. Note that the
@@ -66,15 +66,27 @@
 		directory.
 	-->
 	<rule ref="PSR2">
-		<exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
-		<exclude name="Generic.Files.LineLength"/>
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent" />
+		<exclude name="Generic.Files.LineLength" />
 	</rule>
-	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
 	<rule ref="Generic.WhiteSpace.ScopeIndent">
 		<properties>
-			<property name="indent" value="4"/>
-			<property name="tabIndent" value="true"/>
+			<property name="indent" value="4" />
+			<property name="tabIndent" value="true" />
 		</properties>
 	</rule>
-
+	<rule ref="Generic.Formatting.SpaceAfterNot">
+		<properties>
+			<property name="spacing" value="0" />
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma" />
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall" />
+	<rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing">
+		<properties>
+			<property name="ignoreNewlines" value="true" />
+		</properties>
+	</rule>
 </ruleset>
