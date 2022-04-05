@@ -3,6 +3,7 @@
 namespace StudlyDummyVendor\StudlyDummyPackageName\Tests;
 
 use Spatie\LaravelRay\RayServiceProvider;
+use Clockwork\Support\Laravel\ClockworkServiceProvider;
 
 use Pixel\Support\SupportServiceProvider;
 use Pixel\Support\Testing\WithoutBrowserUI;
@@ -21,7 +22,7 @@ class BrowserTestCase extends BaseTestCase
 	{
 		return realpath(__DIR__ . '/../public');
 	}
-	
+
 	/**
 	 * Initial setup database seeders
 	 *
@@ -42,6 +43,7 @@ class BrowserTestCase extends BaseTestCase
 	{
 		return [
 			RayServiceProvider::class,
+			ClockworkServiceProvider::class,
 			SupportServiceProvider::class,
 			StudlyDummyPackageNameServiceProvider::class
 		];

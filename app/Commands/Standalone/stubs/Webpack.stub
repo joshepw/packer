@@ -1,9 +1,7 @@
-const mix = require('laravel-mix');
 require('@pixelpay/mix');
+const mix = require('laravel-mix');
 
-mix.setupPackage({
-	package: 'LowerCaseDummyPackageName',
-});
+mix.setupPackage('LowerCaseDummyPackageName');
 
 mix.js(__dirname + '/resources/js/LowerCaseDummyPackageName.js', 'js/LowerCaseDummyPackageName.js')
 	.sass(__dirname + '/resources/scss/LowerCaseDummyPackageName.scss', 'css/LowerCaseDummyPackageName.css');

@@ -2,7 +2,11 @@
 
 namespace StudlyDummyVendor\StudlyDummyPackageName\Constants;
 
+use Pixel\Support\Traits\HasConstantList;
+
 class StudlyDummyName
 {
+	use HasConstantList;
+
 	const EXAMPLE = 'value';
 }

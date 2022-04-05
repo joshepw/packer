@@ -13,8 +13,8 @@ return [
 	|
 	*/
 
-	// 'default' => NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
-	'default' => App\Commands\Make::class,
+	'default' => NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
+	// 'default' => App\Commands\Make::class,
 
 	/*
 	|--------------------------------------------------------------------------

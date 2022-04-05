@@ -12,25 +12,29 @@ Write a few lines about the usage of this package.
 Run the tests with:
 
 ``` bash
-composer test
+composer package test
+
+composer package test:browser
+composer package test:feature
+composer package test:unit
 ```
 
 Run the tests with coverage:
 
 ``` bash
-composer test:coverage
+composer package coverage
 ```
 
 Find errors in project:
 
 ``` bash
-composer errors
+composer package errors
 ```
 
 Run code style fixer:
 
 ``` bash
-composer errors:fix
+composer package fix
 ```
 
 Update git hooks commands from composer.json:

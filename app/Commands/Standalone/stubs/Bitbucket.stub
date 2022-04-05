@@ -15,7 +15,7 @@ definitions:
           - refresh-db
           - composer install
           - composer dusk:update
-          - composer test:coverage
+          - composer package coverage
     - step: &build-test-sonarcloud
         name: Build, test and analyze on SonarCloud
         caches:
@@ -24,7 +24,7 @@ definitions:
           - refresh-db
           - composer install
           - composer dusk:update
-          - composer test:coverage
+          - composer package coverage
           - sonar-scanner
     - step: &build-test-deploy
         name: Build, Test and Publish
@@ -34,7 +34,7 @@ definitions:
           - refresh-db
           - composer install
           - composer dusk:update
-          - composer test:coverage
+          - composer package coverage
           - sonar-scanner
           - devliver
 

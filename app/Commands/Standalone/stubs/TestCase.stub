@@ -3,6 +3,7 @@
 namespace StudlyDummyVendor\StudlyDummyPackageName\Tests;
 
 use Spatie\LaravelRay\RayServiceProvider;
+use Clockwork\Support\Laravel\ClockworkServiceProvider;
 
 use Pixel\Support\SupportServiceProvider;
 use StudlyDummyVendor\StudlyDummyPackageName\StudlyDummyPackageNameServiceProvider;
@@ -31,6 +32,7 @@ class TestCase extends BaseTestCase
 	{
 		return [
 			RayServiceProvider::class,
+			ClockworkServiceProvider::class,
 			SupportServiceProvider::class,
 			StudlyDummyPackageNameServiceProvider::class
 		];

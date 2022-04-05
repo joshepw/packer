@@ -53,7 +53,8 @@ trait InteractsWithComposer
 
 	public function isLaravelPackage()
 	{
-		return optional($this->getComposer())->type === 'laravel-package';
+		return optional($this->getComposer())->type === 'laravel-package' ||
+            optional($this->getComposer())->name === 'pixel/support';
 	}
 
 	public function namespaceFromComposer()
@@ -64,7 +65,7 @@ trait InteractsWithComposer
 		if (empty($content)) {
 			return null;
 		}
-		
+
 		cache()->forever('namespaceFromComposer', key($content->autoload->$psr));
 
 		return key($content->autoload->$psr);

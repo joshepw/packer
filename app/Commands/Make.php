@@ -62,21 +62,21 @@ class Make extends Command
 
 			$this->menu->addSubMenu($text, function (CliMenuBuilder $builder) use ($key, $items) {
 				$builder->disableDefaultItems()->setTitle(config("make.$key.description"));
-	
+
 				collect($items)->chunk(self::COLUMNS)->each(function (Collection $chunk) use ($builder) {
-					$builder->addSplitItem(function (SplitItemBuilder $split) use ($chunk) {	
+					$builder->addSplitItem(function (SplitItemBuilder $split) use ($chunk) {
 						$chunk->each(function ($text, $command) use ($split) {
 							$this->addOptionToMenu($command, $text, $split, function (CliMenu $menu) use ($command) {
 								$this->onSelectOptionMenu($menu, $command);
 							});
 						});
-	
+
 						for ($i = 0; $i < self::COLUMNS - $chunk->count(); $i++) {
 							$split->addStaticItem('');
 						}
 					});
 				});
-	
+
 				$this->addFooter([
 					new ReturnMenu,
 					new ExitMenu,
@@ -137,7 +137,7 @@ class Make extends Command
 				$this->askForOption($key, $question, $menu, config('validation.rules.'.$key, []));
 			}
 		}
-		
+
 		$menu->close();
 
 		if (empty($action->questions)) {
@@ -148,7 +148,7 @@ class Make extends Command
 
 		foreach ($action->questions as $key => $question) {
 			$this->addOptionToMenu($key, $question, $child_menu);
-			
+
 			if (is_array($question) && count($action->questions) > 1) {
 				$child_menu->addLineBreak('·');
 			}
